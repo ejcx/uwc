@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "kQZOWxWwML2KrPSVXhhliNyt9SE=",
+			"path": "github.com/buger/goterm",
+			"revision": "45c1d39fe6b92d222144a46a24b526a452082f0f",
+			"revisionTime": "2016-03-21T11:43:43Z"
+		}
+	],
+	"rootPath": "github.com/ejcx/uwc"
+}
