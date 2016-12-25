@@ -8,11 +8,13 @@ Key features:
  3. Does not require you to purchase Wifi on the flight.
 
 Requirements:
+
 Go is installed. If you have an old version of go, make GO15VENDOREXPERIMENT is set.
 
 Usage:
+```
     go get github.com/ejcx/uwc
     go install github.com/ejcx/uwc
     cd $GOPATH/bin
     ./uwc
-
+```
