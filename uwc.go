@@ -21,12 +21,13 @@ var (
 	GogoArg = `use the G flag if you are on a united 
 flight operated by a 3rd party who uses gogo-inflight wifi`
 
-	GogoInflightWIfi = "http://airborne.gogoinflight.com/portal/r/getAllSessionData"
-	UnitedWifi       = "https://www.unitedwifi.com/portal/r/getAllSessionData"
-	lastFlightInfos  = list.New().Init()
-	Color            = flag.Bool("c", false, "don't print colors")
-	Metric           = flag.Bool("m", false, "use the metric system")
-	Gogo             = flag.Bool("g", false, GogoArg)
+	GogoInflightWifi = "http://airborne.gogoinflight.com/portal/r/getAllSessionData"
+
+	UnitedWifi      = "https://www.unitedwifi.com/portal/r/getAllSessionData"
+	lastFlightInfos = list.New().Init()
+	Color           = flag.Bool("c", false, "don't print colors")
+	Metric          = flag.Bool("m", false, "use the metric system")
+	Gogo            = flag.Bool("g", false, GogoArg)
 )
 
 func Print() {
@@ -44,6 +45,11 @@ func Print() {
 	if flInfoGen, ok := f["flifo"]; ok {
 		flInfo = flInfoGen.(map[string]interface{})
 	} else {
+		if isPortalInitialized, ok := f["isPortalInitialized"]; ok {
+			if !isPortalInitialized.(bool) {
+				fmt.Println("Your flight is still initializing...")
+			}
+		}
 		return
 	}
 
@@ -66,7 +72,12 @@ func Print() {
 
 	lastEl := lastFlightInfos.Back()
 	lastFlightInfo := lastEl.Value.(FlightInfo)
-	lastFlInfo := lastFlightInfo["flifo"].(map[string]interface{})
+	var lastFlInfo map[string]interface{}
+	if lastinfo, ok := lastFlightInfo["flifo"]; ok {
+		lastFlInfo = lastinfo.(map[string]interface{})
+	} else {
+		return
+	}
 
 	lastAltitudeFeet, _ := strconv.Atoi(lastFlInfo["altitudeFt"].(string))
 	lastAltitudeMeters, _ := strconv.Atoi(lastFlInfo["altitudeMeters"].(string))
@@ -102,7 +113,7 @@ func main() {
 
 	dataAPI := UnitedWifi
 	if *Gogo {
-		dataAPI = GogoInflightWIfi
+		dataAPI = GogoInflightWifi
 	}
 	for {
 		flightRequest, err := http.Get(dataAPI)
