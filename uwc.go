@@ -65,9 +65,9 @@ func Print() {
 	currGroundSpeedKPH, _ := strconv.Atoi(flInfo["groundSpeedKPH"].(string))
 
 	if *Metric {
-		fmt.Fprintf(flightReport, "%s\t%d\n", "Current Altitude", currAltitudeMeters)
+		fmt.Fprintf(flightReport, "%s\t%d m\n", "Current Altitude", currAltitudeMeters)
 	} else {
-		fmt.Fprintf(flightReport, "%s\t%d\n", "Current Altitude", currAltitudeFeet)
+		fmt.Fprintf(flightReport, "%s\t%d ft\n", "Current Altitude", currAltitudeFeet)
 	}
 
 	lastEl := lastFlightInfos.Back()
@@ -91,15 +91,15 @@ func Print() {
 	deltaGroundSpeedKPH := currGroundSpeedKPH - lastGroundSpeedKPH
 
 	if *Metric {
-		fmt.Fprintf(flightReport, "%s\t%d\n", "∆ Altitude (2 min)", deltaAltitudeMeters)
+		fmt.Fprintf(flightReport, "%s\t%d m\n", "∆ Altitude (2 min)", deltaAltitudeMeters)
 		fmt.Fprintf(flightReport, "%s\t%s\n", "", "")
-		fmt.Fprintf(flightReport, "%s\t%d\n", "Current Ground Speed", currGroundSpeedKPH)
-		fmt.Fprintf(flightReport, "%s\t%d\n", "∆ Ground Speed (2 min)", deltaGroundSpeedKPH)
+		fmt.Fprintf(flightReport, "%s\t%d kph\n", "Current Ground Speed", currGroundSpeedKPH)
+		fmt.Fprintf(flightReport, "%s\t%d kph\n", "∆ Ground Speed (2 min)", deltaGroundSpeedKPH)
 	} else {
-		fmt.Fprintf(flightReport, "%s\t%d\n", "∆ Altitude (2 min)", deltaAltitudeFeet)
+		fmt.Fprintf(flightReport, "%s\t%d ft\n", "∆ Altitude (2 min)", deltaAltitudeFeet)
 		fmt.Fprintf(flightReport, "%s\t%s\n", "", "")
-		fmt.Fprintf(flightReport, "%s\t%d\n", "Current Ground Speed", currGroundSpeedMPH)
-		fmt.Fprintf(flightReport, "%s\t%d\n", "∆ Ground Speed (2 min)", deltaGroundSpeedMPH)
+		fmt.Fprintf(flightReport, "%s\t%d mph\n", "Current Ground Speed", currGroundSpeedMPH)
+		fmt.Fprintf(flightReport, "%s\t%d mph\n", "∆ Ground Speed (2 min)", deltaGroundSpeedMPH)
 	}
 
 	tm.Println(flightReport)
